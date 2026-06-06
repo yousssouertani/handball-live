@@ -6,250 +6,108 @@
 <title>🤾 Live Handball — Aube 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0c10; --surface: #13161d; --card: #1a1e28; --border: #252a38;
-    --accent: #e8ff47; --accent2: #ff4f5e; --text: #f0f2f7; --muted: #6b7280;
-    --live: #ff4f5e; --done: #4ade80; --sat: #3b82f6; --sun: #f97316;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
+  :root{--bg:#0a0c10;--surface:#13161d;--card:#1a1e28;--border:#252a38;--accent:#e8ff47;--accent2:#ff4f5e;--text:#f0f2f7;--muted:#6b7280;--live:#ff4f5e;--done:#4ade80;--sat:#3b82f6;--sun:#f97316;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
 
-  /* SETUP SCREEN */
-  #setup-screen {
-    position:fixed; inset:0; background:var(--bg); z-index:200;
-    display:flex; align-items:center; justify-content:center; padding:24px;
-  }
-  .setup-box {
-    background:var(--surface); border:1.5px solid var(--accent); border-radius:16px;
-    padding:32px; max-width:480px; width:100%;
-  }
-  .setup-box h2 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--accent); margin-bottom:8px; letter-spacing:2px; }
-  .setup-box p { font-size:.85rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
-  .setup-box ol { font-size:.82rem; color:var(--muted); padding-left:18px; margin-bottom:20px; line-height:2; }
-  .setup-box ol li a { color:var(--accent); }
-  .setup-input-group { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
-  .setup-input-group label { font-size:.78rem; font-weight:700; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
-  .setup-input-group input {
-    background:var(--card); border:1.5px solid var(--border); border-radius:8px;
-    color:var(--text); font-family:'DM Sans',sans-serif; font-size:.9rem; padding:10px 14px; outline:none;
-  }
-  .setup-input-group input:focus { border-color:var(--accent); }
-  .btn-setup {
-    width:100%; padding:12px; background:var(--accent); color:#111; border:none;
-    border-radius:8px; font-family:'DM Sans',sans-serif; font-weight:700; font-size:.9rem; cursor:pointer;
-  }
-  .btn-setup:hover { background:#d4eb30; }
-  .setup-error { color:var(--accent2); font-size:.78rem; margin-top:8px; display:none; }
+  #admin-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;}
+  #admin-modal.open{display:flex;}
+  .modal-box{background:var(--surface);border:1.5px solid var(--accent);border-radius:16px;padding:28px;max-width:340px;width:100%;}
+  .modal-box h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text);margin-bottom:16px;letter-spacing:2px;}
+  .modal-err{color:var(--accent2);font-size:.78rem;margin-bottom:10px;display:none;}
+  .modal-input{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;padding:10px 14px;outline:none;margin-bottom:12px;}
+  .modal-input:focus{border-color:var(--accent);}
+  .modal-btns{display:flex;gap:8px;}
+  .btn-ok{flex:1;padding:10px;background:var(--accent);color:#111;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-weight:700;cursor:pointer;}
+  .btn-cancel{padding:10px 16px;background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;}
 
-  /* ADMIN LOGIN MODAL */
-  #admin-modal {
-    position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:150;
-    display:none; align-items:center; justify-content:center; padding:24px;
-  }
-  #admin-modal.open { display:flex; }
-  .modal-box {
-    background:var(--surface); border:1.5px solid var(--border); border-radius:16px;
-    padding:28px; max-width:360px; width:100%;
-  }
-  .modal-box h3 { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--text); margin-bottom:16px; letter-spacing:2px; }
-  .modal-input {
-    width:100%; background:var(--card); border:1.5px solid var(--border); border-radius:8px;
-    color:var(--text); font-family:'DM Sans',sans-serif; font-size:.95rem; padding:10px 14px;
-    outline:none; margin-bottom:12px;
-  }
-  .modal-input:focus { border-color:var(--accent); }
-  .modal-btns { display:flex; gap:8px; }
-  .btn-modal-ok {
-    flex:1; padding:10px; background:var(--accent); color:#111; border:none;
-    border-radius:7px; font-family:'DM Sans',sans-serif; font-weight:700; cursor:pointer;
-  }
-  .btn-modal-ok:hover { background:#d4eb30; }
-  .btn-modal-cancel {
-    padding:10px 16px; background:transparent; color:var(--muted); border:1.5px solid var(--border);
-    border-radius:7px; font-family:'DM Sans',sans-serif; font-weight:600; cursor:pointer;
-  }
-  .btn-modal-cancel:hover { border-color:var(--accent2); color:var(--accent2); }
-  .modal-error { color:var(--accent2); font-size:.78rem; margin-bottom:10px; display:none; }
+  header{background:var(--surface);border-bottom:2px solid var(--accent);padding:18px 20px 14px;position:sticky;top:0;z-index:100;}
+  .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--accent);line-height:1;}
+  .logo span{color:var(--text);}
+  .header-right{display:flex;align-items:center;gap:8px;}
+  .live-pill{display:flex;align-items:center;gap:5px;background:rgba(255,79,94,.12);border:1px solid var(--accent2);color:var(--accent2);font-size:.7rem;font-weight:700;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;text-transform:uppercase;}
+  .live-dot{width:6px;height:6px;background:var(--accent2);border-radius:50%;animation:blink 1.2s infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .btn-admin{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .2s;}
+  .btn-admin:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-admin.on{border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,.08);}
+  .tabs{display:flex;gap:6px;}
+  .tab{padding:6px 16px;border-radius:6px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;}
+  .tab.sat.active,.tab.sat:hover{border-color:var(--sat);color:var(--sat);background:rgba(59,130,246,.08);}
+  .tab.sun.active,.tab.sun:hover{border-color:var(--sun);color:var(--sun);background:rgba(249,115,22,.08);}
+  .tab.all.active,.tab.all:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,.08);}
 
-  /* HEADER */
-  header {
-    background:var(--surface); border-bottom:2px solid var(--accent);
-    padding:20px 24px 16px; position:sticky; top:0; z-index:100;
-  }
-  .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
-  .logo { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:2px; color:var(--accent); line-height:1; }
-  .logo span { color:var(--text); }
-  .header-right { display:flex; align-items:center; gap:10px; }
-  .live-pill {
-    display:flex; align-items:center; gap:6px; background:rgba(255,79,94,.15);
-    border:1px solid var(--accent2); color:var(--accent2); font-size:.72rem; font-weight:700;
-    letter-spacing:1.5px; padding:4px 10px; border-radius:20px; text-transform:uppercase;
-  }
-  .live-dot { width:7px; height:7px; background:var(--accent2); border-radius:50%; animation:pulse 1.2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+  .sync-bar{background:var(--card);border-bottom:1px solid var(--border);padding:5px 20px;display:flex;align-items:center;gap:7px;font-size:.7rem;color:var(--muted);}
+  .sdot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+  .sdot.ok{background:var(--done);}
+  .sdot.busy{background:var(--accent);animation:blink .8s infinite;}
+  .sdot.err{background:var(--accent2);}
 
-  .btn-admin {
-    padding:5px 14px; border-radius:20px; border:1.5px solid var(--border);
-    background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif;
-    font-size:.72rem; font-weight:700; letter-spacing:1px; cursor:pointer; text-transform:uppercase;
-    transition:all .2s;
-  }
-  .btn-admin:hover { border-color:var(--accent); color:var(--accent); }
-  .btn-admin.active { border-color:var(--accent); color:var(--accent); background:rgba(232,255,71,.08); }
-  .btn-admin.logout { border-color:var(--accent2); color:var(--accent2); }
-  .btn-admin.logout:hover { background:rgba(255,79,94,.08); }
+  main{padding:20px 14px;max-width:700px;margin:0 auto;}
+  .day-label{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:3px;margin:24px 0 10px;padding-bottom:5px;border-bottom:1px solid var(--border);color:var(--muted);}
+  .day-label.sat{color:var(--sat);border-color:rgba(59,130,246,.25);}
+  .day-label.sun{color:var(--sun);border-color:rgba(249,115,22,.25);}
 
-  .tabs { display:flex; gap:8px; flex-wrap:wrap; }
-  .tab {
-    padding:7px 18px; border-radius:6px; border:1.5px solid var(--border);
-    background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif;
-    font-size:.85rem; font-weight:600; cursor:pointer; transition:all .2s; letter-spacing:.5px;
-  }
-  .tab.sat.active,.tab.sat:hover { border-color:var(--sat); color:var(--sat); background:rgba(59,130,246,.08); }
-  .tab.sun.active,.tab.sun:hover { border-color:var(--sun); color:var(--sun); background:rgba(249,115,22,.08); }
-  .tab.all.active,.tab.all:hover { border-color:var(--accent); color:var(--accent); background:rgba(232,255,71,.08); }
+  .mc{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;position:relative;overflow:hidden;transition:border-color .2s;}
+  .mc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border);}
+  .mc.live{border-color:rgba(255,79,94,.2);}
+  .mc.live::before{background:var(--live);}
+  .mc.done::before{background:var(--done);}
 
-  /* SYNC STATUS */
-  .sync-bar {
-    background:var(--card); border-bottom:1px solid var(--border);
-    padding:6px 24px; display:flex; align-items:center; gap:8px;
-    font-size:.72rem; color:var(--muted);
-  }
-  .sync-dot { width:6px; height:6px; border-radius:50%; background:var(--muted); }
-  .sync-dot.ok { background:var(--done); }
-  .sync-dot.syncing { background:var(--accent); animation:pulse 1s infinite; }
-  .sync-dot.error { background:var(--accent2); }
+  .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .cat{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+  .sbadge{font-size:.67rem;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:4px;text-transform:uppercase;}
+  .sbadge.live{background:rgba(255,79,94,.15);color:var(--live);border:1px solid var(--live);}
+  .sbadge.done{background:rgba(74,222,128,.1);color:var(--done);border:1px solid var(--done);}
+  .sbadge.pending{background:rgba(107,114,128,.08);color:var(--muted);border:1px solid var(--border);}
 
-  /* MAIN */
-  main { padding:24px 16px; max-width:720px; margin:0 auto; }
-  .day-label {
-    font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:3px; color:var(--muted);
-    margin:28px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--border);
-  }
-  .day-label.sat { color:var(--sat); border-color:rgba(59,130,246,.3); }
-  .day-label.sun { color:var(--sun); border-color:rgba(249,115,22,.3); }
+  .sr{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:10px;}
+  .tb{display:flex;flex-direction:column;}
+  .tb.r{align-items:flex-end;text-align:right;}
+  .tn{font-weight:700;font-size:.9rem;line-height:1.2;color:var(--text);}
+  .sc-wrap{display:flex;align-items:center;gap:3px;}
+  .sc-btns{display:flex;flex-direction:column;gap:3px;}
+  .sc-btns.l{order:-1;}
+  .sb{width:26px;height:26px;border:none;border-radius:5px;font-size:.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s;line-height:1;}
+  .sb:disabled{opacity:.15;cursor:not-allowed;}
+  .sb.plus{background:rgba(232,255,71,.12);color:var(--accent);}
+  .sb.plus:hover:not(:disabled){background:rgba(232,255,71,.28);}
+  .sb.minus{background:rgba(107,114,128,.12);color:var(--muted);font-size:.8rem;}
+  .sb.minus:hover:not(:disabled){background:rgba(107,114,128,.25);}
+  .sblock{display:flex;align-items:center;}
+  .snum{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;color:var(--text);min-width:42px;text-align:center;}
+  .ssep{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--muted);margin:0 1px;}
 
-  /* MATCH CARD */
-  .match-card {
-    background:var(--card); border:1.5px solid var(--border); border-radius:12px;
-    padding:16px; margin-bottom:12px; transition:border-color .2s,transform .1s;
-    position:relative; overflow:hidden;
-  }
-  .match-card::before {
-    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
-    background:var(--border); border-radius:3px 0 0 3px;
-  }
-  .match-card.live::before { background:var(--live); }
-  .match-card.done::before { background:var(--done); }
+  .cf{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--border);padding-top:9px;flex-wrap:wrap;}
+  .meta{font-size:.7rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;}
+  .abtns{display:flex;gap:5px;align-items:center;}
+  .abtn{padding:4px 11px;border-radius:5px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .12s;}
+  .abtn.start{border-color:var(--accent);color:var(--accent);}
+  .abtn.start:hover{background:rgba(232,255,71,.08);}
+  .abtn.end{border-color:var(--done);color:var(--done);}
+  .abtn.end:hover{background:rgba(74,222,128,.08);}
+  .abtn.rst:hover{border-color:var(--accent2);color:var(--accent2);}
+  .timer{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent);letter-spacing:2px;min-width:48px;text-align:center;}
+  .timer.live{color:var(--live);}
+  .ro{text-align:center;font-size:.68rem;color:var(--muted);padding:6px 0 0;border-top:1px solid var(--border);margin-top:6px;}
 
-  .card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-  .category { font-size:.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
-  .status-badge { font-size:.7rem; font-weight:700; letter-spacing:1px; padding:3px 8px; border-radius:4px; text-transform:uppercase; }
-  .status-badge.live { background:rgba(255,79,94,.2); color:var(--live); border:1px solid var(--live); }
-  .status-badge.done { background:rgba(74,222,128,.15); color:var(--done); border:1px solid var(--done); }
-  .status-badge.pending { background:rgba(107,114,128,.1); color:var(--muted); border:1px solid var(--border); }
-
-  .score-row { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; margin-bottom:12px; }
-  .team-block { display:flex; flex-direction:column; }
-  .team-block.right { align-items:flex-end; text-align:right; }
-  .team-name { font-weight:700; font-size:.95rem; line-height:1.2; color:var(--text); }
-  .score-block { display:flex; align-items:center; gap:0; }
-  .score-num { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; line-height:1; color:var(--text); min-width:44px; text-align:center; }
-  .score-sep { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--muted); margin:0 2px; }
-
-  .score-controls { display:flex; flex-direction:column; gap:3px; margin-left:4px; }
-  .score-controls.left { margin-left:0; margin-right:4px; }
-  .btn-score {
-    width:28px; height:28px; border:none; border-radius:5px; font-size:1rem; font-weight:700;
-    cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; line-height:1;
-  }
-  .btn-score:disabled { opacity:.2; cursor:not-allowed; }
-  .btn-plus { background:rgba(232,255,71,.15); color:var(--accent); }
-  .btn-plus:hover:not(:disabled) { background:rgba(232,255,71,.3); }
-  .btn-minus { background:rgba(107,114,128,.15); color:var(--muted); font-size:.85rem; }
-  .btn-minus:hover:not(:disabled) { background:rgba(107,114,128,.3); }
-
-  .card-footer {
-    display:flex; justify-content:space-between; align-items:center; gap:8px;
-    border-top:1px solid var(--border); padding-top:10px; flex-wrap:wrap;
-  }
-  .meta-info { font-size:.73rem; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; }
-  .meta-info span { display:flex; align-items:center; gap:4px; }
-  .action-btns { display:flex; gap:6px; }
-  .btn-action {
-    padding:5px 12px; border-radius:5px; border:1.5px solid var(--border);
-    background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif;
-    font-size:.75rem; font-weight:600; cursor:pointer; transition:all .15s;
-  }
-  .btn-start { border-color:var(--accent); color:var(--accent); }
-  .btn-start:hover { background:rgba(232,255,71,.1); }
-  .btn-end { border-color:var(--done); color:var(--done); }
-  .btn-end:hover { background:rgba(74,222,128,.1); }
-  .btn-reset:hover { border-color:var(--accent2); color:var(--accent2); background:rgba(255,79,94,.05); }
-  .timer-display { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:var(--accent); letter-spacing:2px; min-width:52px; text-align:center; }
-  .timer-display.live { color:var(--live); }
-
-  .readonly-notice {
-    text-align:center; font-size:.72rem; color:var(--muted); padding:10px 0 0;
-    border-top:1px solid var(--border); margin-top:8px; letter-spacing:.5px;
-  }
-
-  .empty { text-align:center; color:var(--muted); padding:60px 20px; font-size:.9rem; }
-  .loading { text-align:center; padding:60px 20px; color:var(--muted); }
-  .loading span { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:3px; color:var(--accent); animation:pulse 1s infinite; display:block; margin-bottom:8px; }
-
-  /* TOAST */
-  .toast {
-    position:fixed; bottom:24px; right:24px; background:var(--card); border:1.5px solid var(--accent);
-    color:var(--accent); padding:10px 18px; border-radius:8px; font-size:.82rem; font-weight:600;
-    z-index:999; transform:translateY(80px); opacity:0; transition:all .3s; pointer-events:none;
-  }
-  .toast.show { transform:translateY(0); opacity:1; }
-
-  ::-webkit-scrollbar { width:5px; }
-  ::-webkit-scrollbar-track { background:var(--bg); }
-  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  .loading{text-align:center;padding:60px 20px;color:var(--muted);}
+  .loading b{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;color:var(--accent);animation:blink 1s infinite;display:block;margin-bottom:6px;}
+  .toast{position:fixed;bottom:20px;right:20px;background:var(--card);border:1.5px solid var(--accent);color:var(--accent);padding:9px 16px;border-radius:8px;font-size:.8rem;font-weight:600;z-index:999;transform:translateY(70px);opacity:0;transition:all .28s;pointer-events:none;}
+  .toast.show{transform:translateY(0);opacity:1;}
 </style>
 </head>
 <body>
 
-<!-- SETUP SCREEN -->
-<div id="setup-screen">
-  <div class="setup-box">
-    <h2>⚙️ CONFIGURATION</h2>
-    <p>Pour que les scores soient synchronisés en temps réel sur tous les appareils, l'appli utilise <strong>JSONBin.io</strong> (gratuit). Suis ces étapes une seule fois :</p>
-    <ol>
-      <li>Va sur <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> → Crée un compte gratuit</li>
-      <li>Clique <strong>CREATE BIN</strong> → colle <code>{}</code> → Save</li>
-      <li>Copie le <strong>BIN ID</strong> (ex: <code>6660abc123...</code>)</li>
-      <li>Va dans <strong>API Keys</strong> → copie ta <strong>Master Key</strong></li>
-    </ol>
-    <div class="setup-input-group">
-      <label>BIN ID</label>
-      <input type="text" id="setup-bin" placeholder="6660abc123..." />
-    </div>
-    <div class="setup-input-group">
-      <label>API KEY (Master Key)</label>
-      <input type="text" id="setup-key" placeholder="$2a$10$..." />
-    </div>
-    <div class="setup-input-group">
-      <label>Mot de passe Admin</label>
-      <input type="password" id="setup-pass" placeholder="Choisis un mot de passe secret" />
-    </div>
-    <div class="setup-error" id="setup-error">❌ Erreur — vérifie le BIN ID et l'API Key</div>
-    <button class="btn-setup" onclick="setupApp()">Initialiser l'appli →</button>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN MODAL -->
 <div id="admin-modal">
   <div class="modal-box">
     <h3>🔐 MODE ADMIN</h3>
-    <div class="modal-error" id="modal-error">❌ Mot de passe incorrect</div>
-    <input class="modal-input" type="password" id="admin-pass-input" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')checkAdmin()" />
+    <div class="modal-err" id="merr">❌ Mot de passe incorrect</div>
+    <input class="modal-input" type="password" id="mpwd" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')checkAdmin()"/>
     <div class="modal-btns">
-      <button class="btn-modal-ok" onclick="checkAdmin()">Entrer</button>
-      <button class="btn-modal-cancel" onclick="closeAdminModal()">Annuler</button>
+      <button class="btn-ok" onclick="checkAdmin()">Entrer</button>
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
     </div>
   </div>
 </div>
@@ -259,311 +117,337 @@
     <div class="logo">🤾 HAND<span>LIVE</span></div>
     <div class="header-right">
       <div class="live-pill"><div class="live-dot"></div>LIVE</div>
-      <button class="btn-admin" id="admin-btn" onclick="toggleAdmin()">Admin</button>
+      <button class="btn-admin" id="abtn" onclick="toggleAdmin()">Admin</button>
     </div>
   </div>
   <div class="tabs">
     <button class="tab all active" onclick="filterDay('all')">Tous</button>
-    <button class="tab sat" onclick="filterDay('sat')">Samedi 6</button>
-    <button class="tab sun" onclick="filterDay('sun')">Dimanche 7</button>
+    <button class="tab sat" onclick="filterDay('sat')">Sam 6</button>
+    <button class="tab sun" onclick="filterDay('sun')">Dim 7</button>
   </div>
 </header>
 
-<div class="sync-bar">
-  <div class="sync-dot" id="sync-dot"></div>
-  <span id="sync-label">Connexion...</span>
-</div>
-
-<main id="main-content"><div class="loading"><span>CHARGEMENT</span>Récupération des scores...</div></main>
+<div class="sync-bar"><div class="sdot" id="sdot"></div><span id="slbl">Connexion...</span></div>
+<main id="app"><div class="loading"><b>CHARGEMENT</b>Récupération des scores...</div></main>
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── CONFIG (loaded from localStorage) ───────────────────────────────────────
-let BIN_ID = '', API_KEY = '', ADMIN_PASS = '';
-let isAdmin = false;
-let currentFilter = 'all';
-let matches = [];
-const timers = {};
-let pollInterval = null;
-let isSaving = false;
+// ═══════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════
+const BIN_ID     = '69f38e1a856a6821898fbdc7';
+const MASTER_KEY = '$2a$10$nAhf4Bi.NkI8BENiMwBpruEoPugNBs8Xt/rSkMmEgTCIRGudMRu.2';
+const ADMIN_PASS = 'coupeaube2526';
 
-const MATCHES_DEFAULT = [
-  { id:1, day:'sat', category:'Moins 11 Filles', time:'10h30', format:'3x12 — pause 5min', vestiaire:'1-2 Hand', home:'RSJH', away:'ASMT', arbitres:'R. Diop & P.A. Yao', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:2, day:'sat', category:'Moins 13 Filles', time:'12h00', format:'3x15 — pause 5min', vestiaire:'3-4 Hand', home:'RSJH', away:'ASMT', arbitres:'M. Bourgeois & M. Lambelin', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:3, day:'sat', category:'Moins 11 Garçons', time:'14h00', format:'3x12 — pause 5min', vestiaire:'1-2 Foot', home:'RSJH', away:'HBCSC', arbitres:'L.P. Visse', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:4, day:'sat', category:'Moins 15 Garçons', time:'16h00', format:'3x18 — pause 5min', vestiaire:'3-4 Foot', home:'HBCSC', away:'RSJH', arbitres:'B. Laurent & Sautereau', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:5, day:'sat', category:'Moins 18 Garçons', time:'18h00', format:'2x30 — pause 10min', vestiaire:'1-2 Hand', home:'RHB', away:'Entente USSM / Savino', arbitres:'O. Blondet & E. Florian', handicap:'2x5 buts retard pour RHB', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:6, day:'sat', category:'Moins 18 Filles', time:'20h00', format:'2x30 — pause 10min', vestiaire:'3-4 Hand', home:'Entente ASMT/ARCIS', away:'Entente RSJH SAVINO', arbitres:'A. Haby & G. Buda', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:7, day:'sun', category:'Moins 15 Filles', time:'10h00', format:'3x18 — pause 5min', vestiaire:'1-2 Hand', home:'Entente ASMT/ARCIS', away:'HBCSC', arbitres:'M. El Battani & H. Pointer', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:8, day:'sun', category:'Moins 13 Garçons', time:'12h00', format:'3x15 — pause 5min', vestiaire:'1-2 Foot', home:'RSJH', away:'ETAC', arbitres:'B. Bertolo & Y. Colombet', handicap:'3x3 buts de retard pour RSJH', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:9, day:'sun', category:'Plus 16 Filles', time:'14h00', format:'2x30 — pause 10min', vestiaire:'1-2 Hand', home:'Bar Sur Seine', away:'HBCSC', arbitres:'B. Laurent & Sautereau', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:10, day:'sun', category:'🏆 Supercoupe Plus 16 Garçons', time:'16h00', format:'2x30 — pause 10min', vestiaire:'3-4 Hand', home:'Bar Sur Seine', away:'ETAC', arbitres:'T. Bradja & C. Duquesnoy', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false },
-  { id:11, day:'sun', category:'Plus 16 Masculin', time:'18h00', format:'2x30 — pause 10min', vestiaire:'1-2 Hand', home:'Nogent', away:'Bar Sur Aube', arbitres:'L. Doré & A. Sanguinède', status:'pending', scoreHome:0, scoreAway:0, elapsed:0, timerRunning:false }
+const DEFAULT = [
+  {id:1,day:'sat',category:'Moins 11 Filles',time:'10h30',format:'3x12 — pause 5min',vestiaire:'1-2 Hand',home:'RSJH',away:'ASMT',arbitres:'R. Diop & P.A. Yao',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:2,day:'sat',category:'Moins 13 Filles',time:'12h00',format:'3x15 — pause 5min',vestiaire:'3-4 Hand',home:'RSJH',away:'ASMT',arbitres:'M. Bourgeois & M. Lambelin',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:3,day:'sat',category:'Moins 11 Garçons',time:'14h00',format:'3x12 — pause 5min',vestiaire:'1-2 Foot',home:'RSJH',away:'HBCSC',arbitres:'L.P. Visse',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:4,day:'sat',category:'Moins 15 Garçons',time:'16h00',format:'3x18 — pause 5min',vestiaire:'3-4 Foot',home:'HBCSC',away:'RSJH',arbitres:'B. Laurent & Sautereau',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:5,day:'sat',category:'Moins 18 Garçons',time:'18h00',format:'2x30 — pause 10min',vestiaire:'1-2 Hand',home:'RHB',away:'Entente USSM/Savino',arbitres:'O. Blondet & E. Florian',handicap:'2x5 buts retard RHB',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:6,day:'sat',category:'Moins 18 Filles',time:'20h00',format:'2x30 — pause 10min',vestiaire:'3-4 Hand',home:'Entente ASMT/ARCIS',away:'Entente RSJH SAVINO',arbitres:'A. Haby & G. Buda',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:7,day:'sun',category:'Moins 15 Filles',time:'10h00',format:'3x18 — pause 5min',vestiaire:'1-2 Hand',home:'Entente ASMT/ARCIS',away:'HBCSC',arbitres:'M. El Battani & H. Pointer',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:8,day:'sun',category:'Moins 13 Garçons',time:'12h00',format:'3x15 — pause 5min',vestiaire:'1-2 Foot',home:'RSJH',away:'ETAC',arbitres:'B. Bertolo & Y. Colombet',handicap:'3x3 buts retard RSJH',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:9,day:'sun',category:'Plus 16 Filles',time:'14h00',format:'2x30 — pause 10min',vestiaire:'1-2 Hand',home:'Bar Sur Seine',away:'HBCSC',arbitres:'B. Laurent & Sautereau',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:10,day:'sun',category:'🏆 Supercoupe +16 Garçons',time:'16h00',format:'2x30 — pause 10min',vestiaire:'3-4 Hand',home:'Bar Sur Seine',away:'ETAC',arbitres:'T. Bradja & C. Duquesnoy',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:11,day:'sun',category:'Plus 16 Masculin',time:'18h00',format:'2x30 — pause 10min',vestiaire:'1-2 Hand',home:'Nogent',away:'Bar Sur Aube',arbitres:'L. Doré & A. Sanguinède',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0}
 ];
 
-// ─── SETUP ────────────────────────────────────────────────────────────────────
-function loadConfig() {
-  const cfg = JSON.parse(localStorage.getItem('hb_config') || 'null');
-  if (cfg && cfg.binId && cfg.apiKey && cfg.adminPass) {
-    BIN_ID = cfg.binId; API_KEY = cfg.apiKey; ADMIN_PASS = cfg.adminPass;
-    return true;
-  }
-  return false;
+// ═══════════════════════════════════════════════════════
+//  STATE  — single source of truth
+// ═══════════════════════════════════════════════════════
+let matches    = [];          // live data
+let isAdmin    = false;
+let filter     = 'all';
+const clocks   = {};          // setInterval handles per match id
+
+// Lock flags to prevent race conditions
+let saveInFlight = false;     // a PUT is running
+let fetchBlocked = false;     // block fetch while admin is editing
+
+// ═══════════════════════════════════════════════════════
+//  SYNC HELPERS
+// ═══════════════════════════════════════════════════════
+function sync(state, txt) {
+  document.getElementById('sdot').className = 'sdot ' + state;
+  document.getElementById('slbl').textContent = txt;
 }
+function ts() { return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
 
-async function setupApp() {
-  const binId = document.getElementById('setup-bin').value.trim();
-  const apiKey = document.getElementById('setup-key').value.trim();
-  const pass = document.getElementById('setup-pass').value.trim();
-  const errEl = document.getElementById('setup-error');
-  errEl.style.display = 'none';
-  if (!binId || !apiKey || !pass) { errEl.textContent = '❌ Remplis tous les champs'; errEl.style.display = 'block'; return; }
-
-  // Test connection & initialize bin
-  try {
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
-      body: JSON.stringify({ matches: MATCHES_DEFAULT })
-    });
-    if (!res.ok) throw new Error();
-    localStorage.setItem('hb_config', JSON.stringify({ binId, apiKey, adminPass: pass }));
-    BIN_ID = binId; API_KEY = apiKey; ADMIN_PASS = pass;
-    document.getElementById('setup-screen').style.display = 'none';
-    init();
-  } catch {
-    errEl.textContent = '❌ Erreur — vérifie le BIN ID et l\'API Key'; errEl.style.display = 'block';
-  }
-}
-
-// ─── JSONBIN API ──────────────────────────────────────────────────────────────
-function setSyncStatus(state, label) {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot ' + state;
-  lbl.textContent = label;
-}
-
+// ═══════════════════════════════════════════════════════
+//  FETCH  (read from JSONBin)
+// ═══════════════════════════════════════════════════════
 async function fetchData() {
+  // Never overwrite local state while admin is saving or editing
+  if (fetchBlocked || saveInFlight) return;
+
   try {
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-      headers: { 'X-Master-Key': API_KEY }
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      headers: {'X-Master-Key': MASTER_KEY}
     });
-    if (!res.ok) throw new Error();
-    const data = await res.json();
-    const remote = data.record.matches || MATCHES_DEFAULT;
-    // Merge: keep local timers running, update scores/status from remote
-    if (matches.length === 0) {
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    const remote = data.record && Array.isArray(data.record.handball) ? data.record.handball : null;
+
+    if (!remote) {
+      // First time: bin has no handball key → push defaults
+      matches = JSON.parse(JSON.stringify(DEFAULT));
+      await saveData();
+    } else if (!matches.length) {
+      // First load: take remote as-is
       matches = remote;
-    } else {
-      remote.forEach(rm => {
-        const lm = matches.find(x => x.id === rm.id);
-        if (!lm) return;
-        // Always trust remote for scores/status; keep local timer if running
-        lm.scoreHome = rm.scoreHome; lm.scoreAway = rm.scoreAway;
-        lm.status = rm.status; lm.elapsed = rm.elapsed;
-        if (!lm.timerRunning && rm.timerRunning && lm.status === 'live') {
-          lm.timerRunning = true; startTimer(lm.id);
-        }
-        if (lm.timerRunning && rm.status === 'done') {
-          lm.timerRunning = false; if (timers[lm.id]) { clearInterval(timers[lm.id]); delete timers[lm.id]; }
-        }
-      });
+      restartClocks();
+    } else if (!isAdmin) {
+      // Viewer: always trust remote
+      mergeRemote(remote);
     }
-    setSyncStatus('ok', 'Synchronisé — ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit',second:'2-digit'}));
+    // If admin is logged in: do NOT overwrite local state with remote
+    sync('ok', 'Synchronisé — ' + ts());
     render();
-  } catch {
-    setSyncStatus('error', 'Erreur de connexion');
+  } catch(e) {
+    sync('err', 'Erreur de connexion');
   }
 }
 
-async function pushData() {
-  if (isSaving) return;
-  isSaving = true;
-  setSyncStatus('syncing', 'Sauvegarde...');
+// Merge remote into local WITHOUT touching matches admin is editing
+function mergeRemote(remote) {
+  remote.forEach(rm => {
+    const lm = matches.find(x => x.id === rm.id);
+    if (!lm) return;
+    lm.status = rm.status;
+    lm.timerRunning = rm.timerRunning || false;
+    lm.scoreHome = rm.scoreHome;
+    lm.scoreAway = rm.scoreAway;
+    lm.elapsed = rm.elapsed;
+    // Sync clock state
+    if (rm.status === 'live' && !clocks[rm.id]) startClock(rm.id);
+    if (rm.status !== 'live' && clocks[rm.id]) stopClock(rm.id);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  SAVE  (write to JSONBin)
+// ═══════════════════════════════════════════════════════
+async function saveData() {
+  if (saveInFlight) return;   // already saving — skip, next call will catch up
+  saveInFlight = true;
+  fetchBlocked = true;
+  sync('busy', 'Sauvegarde...');
   try {
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-      body: JSON.stringify({ matches })
+    const body = JSON.stringify({ handball: matches });
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      method:  'PUT',
+      headers: {'Content-Type':'application/json','X-Master-Key': MASTER_KEY},
+      body
     });
-    if (!res.ok) throw new Error();
-    setSyncStatus('ok', 'Sauvegardé — ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit',second:'2-digit'}));
-  } catch {
-    setSyncStatus('error', 'Échec sauvegarde');
-  }
-  isSaving = false;
-}
-
-// ─── ADMIN ────────────────────────────────────────────────────────────────────
-function toggleAdmin() {
-  if (isAdmin) { logoutAdmin(); return; }
-  document.getElementById('admin-modal').classList.add('open');
-  setTimeout(() => document.getElementById('admin-pass-input').focus(), 100);
-}
-function closeAdminModal() {
-  document.getElementById('admin-modal').classList.remove('open');
-  document.getElementById('admin-pass-input').value = '';
-  document.getElementById('modal-error').style.display = 'none';
-}
-function checkAdmin() {
-  const val = document.getElementById('admin-pass-input').value;
-  if (val === ADMIN_PASS) {
-    isAdmin = true;
-    closeAdminModal();
-    const btn = document.getElementById('admin-btn');
-    btn.textContent = '🔓 Admin ON'; btn.classList.add('active');
-    render(); showToast('✅ Mode admin activé');
-  } else {
-    document.getElementById('modal-error').style.display = 'block';
+    if (!r.ok) throw new Error(r.status);
+    sync('ok', 'Sauvegardé — ' + ts());
+  } catch(e) {
+    sync('err', 'Échec sauvegarde — réessaye');
+  } finally {
+    saveInFlight = false;
+    // Unblock fetch 3 seconds after save completes (gives time for JSONBin to propagate)
+    setTimeout(() => { fetchBlocked = false; }, 3000);
   }
 }
-function logoutAdmin() {
-  isAdmin = false;
-  const btn = document.getElementById('admin-btn');
-  btn.textContent = 'Admin'; btn.classList.remove('active'); btn.classList.remove('logout');
-  render(); showToast('🔒 Mode admin désactivé');
-}
 
-// ─── MATCH ACTIONS (admin only) ───────────────────────────────────────────────
-function startMatch(id) {
-  if (!isAdmin) return;
-  const m = matches.find(x => x.id === id);
-  m.status = 'live'; m.timerRunning = true;
-  pushData(); render(); startTimer(id);
-  showToast(`▶ ${m.home} vs ${m.away} — Match lancé !`);
+// ═══════════════════════════════════════════════════════
+//  CLOCKS
+// ═══════════════════════════════════════════════════════
+function fmt(s) {
+  return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
 }
-function endMatch(id) {
-  if (!isAdmin) return;
-  const m = matches.find(x => x.id === id);
-  m.status = 'done'; m.timerRunning = false;
-  if (timers[id]) { clearInterval(timers[id]); delete timers[id]; }
-  pushData(); render();
-  showToast(`✅ Match terminé — ${m.home} ${m.scoreHome} : ${m.scoreAway} ${m.away}`);
-}
-function resetMatch(id) {
-  if (!isAdmin) return;
-  const m = matches.find(x => x.id === id);
-  m.status = 'pending'; m.timerRunning = false; m.scoreHome = 0; m.scoreAway = 0; m.elapsed = 0;
-  if (timers[id]) { clearInterval(timers[id]); delete timers[id]; }
-  pushData(); render();
-}
-function changeScore(id, side, delta) {
-  if (!isAdmin) return;
-  const m = matches.find(x => x.id === id);
-  if (side === 'home') m.scoreHome = Math.max(0, m.scoreHome + delta);
-  else m.scoreAway = Math.max(0, m.scoreAway + delta);
-  pushData();
-  document.getElementById(`score-home-${id}`).textContent = m.scoreHome;
-  document.getElementById(`score-away-${id}`).textContent = m.scoreAway;
-}
-
-// ─── TIMER ────────────────────────────────────────────────────────────────────
-function formatElapsed(s) {
-  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-}
-function startTimer(id) {
-  if (timers[id]) return;
-  timers[id] = setInterval(() => {
+function startClock(id) {
+  if (clocks[id]) return;
+  clocks[id] = setInterval(() => {
     const m = matches.find(x => x.id === id);
-    if (!m || !m.timerRunning) { clearInterval(timers[id]); delete timers[id]; return; }
+    if (!m || m.status !== 'live') { stopClock(id); return; }
     m.elapsed++;
-    const el = document.getElementById(`timer-${id}`);
-    if (el) el.textContent = formatElapsed(m.elapsed);
-    // Push elapsed every 30s to avoid too many API calls
-    if (m.elapsed % 30 === 0) pushData();
+    const el = document.getElementById('t-' + id);
+    if (el) el.textContent = fmt(m.elapsed);
+    // Save elapsed every 60s to avoid flooding API
+    if (m.elapsed % 60 === 0) saveData();
   }, 1000);
 }
+function stopClock(id) {
+  clearInterval(clocks[id]);
+  delete clocks[id];
+}
+function restartClocks() {
+  matches.filter(m => m.status === 'live').forEach(m => startClock(m.id));
+}
 
-// ─── UI ───────────────────────────────────────────────────────────────────────
-function filterDay(day) {
-  currentFilter = day;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.tab.${day}`).classList.add('active');
+// ═══════════════════════════════════════════════════════
+//  ADMIN ACTIONS  (all block fetch while operating)
+// ═══════════════════════════════════════════════════════
+function act(fn) {
+  if (!isAdmin) return;
+  fetchBlocked = true;   // block polling while we act
+  fn();
+  saveData();
   render();
 }
+
+function startMatch(id) {
+  act(() => {
+    const m = matches.find(x=>x.id===id);
+    m.status = 'live';
+    startClock(id);
+    showToast(`▶ ${m.home} vs ${m.away} — Lancé !`);
+  });
+}
+function endMatch(id) {
+  act(() => {
+    const m = matches.find(x=>x.id===id);
+    m.status = 'done';
+    stopClock(id);
+    showToast(`✅ ${m.home} ${m.scoreHome}:${m.scoreAway} ${m.away}`);
+  });
+}
+function resetMatch(id) {
+  act(() => {
+    const m = matches.find(x=>x.id===id);
+    m.status = 'pending'; m.scoreHome = 0; m.scoreAway = 0; m.elapsed = 0;
+    stopClock(id);
+  });
+}
+function changeScore(id, side, d) {
+  act(() => {
+    const m = matches.find(x=>x.id===id);
+    if (side==='h') m.scoreHome = Math.max(0, m.scoreHome + d);
+    else            m.scoreAway = Math.max(0, m.scoreAway + d);
+    // Update DOM immediately for snappy feel
+    const eh = document.getElementById('sh-'+id);
+    const ea = document.getElementById('sa-'+id);
+    if (eh) eh.textContent = m.scoreHome;
+    if (ea) ea.textContent = m.scoreAway;
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  ADMIN LOGIN
+// ═══════════════════════════════════════════════════════
+function toggleAdmin() {
+  if (isAdmin) {
+    isAdmin = false;
+    fetchBlocked = false;
+    document.getElementById('abtn').textContent = 'Admin';
+    document.getElementById('abtn').classList.remove('on');
+    render();
+    showToast('🔒 Mode admin désactivé');
+  } else {
+    document.getElementById('admin-modal').classList.add('open');
+    setTimeout(() => document.getElementById('mpwd').focus(), 80);
+  }
+}
+function closeModal() {
+  document.getElementById('admin-modal').classList.remove('open');
+  document.getElementById('mpwd').value = '';
+  document.getElementById('merr').style.display = 'none';
+}
+function checkAdmin() {
+  if (document.getElementById('mpwd').value === ADMIN_PASS) {
+    isAdmin = true;
+    fetchBlocked = true;   // don't let polling overwrite while admin works
+    closeModal();
+    document.getElementById('abtn').textContent = '🔓 Admin ON';
+    document.getElementById('abtn').classList.add('on');
+    render();
+    showToast('✅ Mode admin activé');
+  } else {
+    document.getElementById('merr').style.display = 'block';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  UI
+// ═══════════════════════════════════════════════════════
+function filterDay(day) {
+  filter = day;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab.' + day).classList.add('active');
+  render();
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
 }
 
 function render() {
   if (!matches.length) return;
-  const container = document.getElementById('main-content');
-  let html = '';
-  const days = currentFilter === 'all' ? ['sat','sun'] : [currentFilter];
-  const labels = { sat:'Samedi 6 Juin', sun:'Dimanche 7 Juin' };
+  const app  = document.getElementById('app');
+  const days = filter === 'all' ? ['sat','sun'] : [filter];
+  const lbls = {sat:'Samedi 6 Juin', sun:'Dimanche 7 Juin'};
+  let html   = '';
 
   days.forEach(day => {
-    if (currentFilter === 'all') html += `<div class="day-label ${day}">${labels[day]}</div>`;
+    if (filter === 'all') html += `<div class="day-label ${day}">${lbls[day]}</div>`;
     matches.filter(m => m.day === day).forEach(m => {
-      const statusLabel = m.status==='live' ? 'En cours' : m.status==='done' ? 'Terminé' : m.time;
-      const isLive = m.status === 'live', isDone = m.status === 'done';
-      const dis = isAdmin ? '' : 'disabled';
-
+      const live = m.status === 'live', done = m.status === 'done';
+      const sl   = live ? 'En cours' : done ? 'Terminé' : m.time;
+      const dis  = isAdmin ? '' : 'disabled';
       html += `
-      <div class="match-card ${m.status}" id="card-${m.id}">
-        <div class="card-header">
-          <span class="category">${m.category}</span>
-          <span class="status-badge ${m.status}">${statusLabel}</span>
-        </div>
-        <div class="score-row">
-          <div class="team-block"><div class="team-name">${m.home}</div></div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <div class="score-controls left">
-              <button class="btn-score btn-plus" onclick="changeScore(${m.id},'home',1)" ${dis}>+</button>
-              <button class="btn-score btn-minus" onclick="changeScore(${m.id},'home',-1)" ${dis}>−</button>
-            </div>
-            <div class="score-block">
-              <span class="score-num" id="score-home-${m.id}">${m.scoreHome}</span>
-              <span class="score-sep">:</span>
-              <span class="score-num" id="score-away-${m.id}">${m.scoreAway}</span>
-            </div>
-            <div class="score-controls">
-              <button class="btn-score btn-plus" onclick="changeScore(${m.id},'away',1)" ${dis}>+</button>
-              <button class="btn-score btn-minus" onclick="changeScore(${m.id},'away',-1)" ${dis}>−</button>
-            </div>
-          </div>
-          <div class="team-block right"><div class="team-name">${m.away}</div></div>
-        </div>
-        <div class="card-footer">
-          <div class="meta-info">
-            <span>⏱ ${m.format}</span>
-            ${m.handicap ? `<span>⚖️ ${m.handicap}</span>` : ''}
-            <span>🏟 Vest. ${m.vestiaire}</span>
-            <span>👤 ${m.arbitres}</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div class="timer-display ${isLive?'live':''}" id="timer-${m.id}">${formatElapsed(m.elapsed)}</div>
-            ${isAdmin ? `<div class="action-btns">
-              ${!isDone&&!isLive ? `<button class="btn-action btn-start" onclick="startMatch(${m.id})">▶ Démarrer</button>` : ''}
-              ${isLive ? `<button class="btn-action btn-end" onclick="endMatch(${m.id})">■ Terminer</button>` : ''}
-              ${isDone||isLive ? `<button class="btn-action btn-reset" onclick="resetMatch(${m.id})">↺</button>` : ''}
-            </div>` : ''}
-          </div>
-        </div>
-        ${!isAdmin ? `<div class="readonly-notice">👁 Lecture seule — scores en direct</div>` : ''}
-      </div>`;
+<div class="mc ${m.status}">
+  <div class="ch">
+    <span class="cat">${m.category}</span>
+    <span class="sbadge ${m.status}">${sl}</span>
+  </div>
+  <div class="sr">
+    <div class="tb"><div class="tn">${m.home}</div></div>
+    <div class="sc-wrap">
+      <div class="sc-btns l">
+        <button class="sb plus" onclick="changeScore(${m.id},'h',1)" ${dis}>+</button>
+        <button class="sb minus" onclick="changeScore(${m.id},'h',-1)" ${dis}>−</button>
+      </div>
+      <div class="sblock">
+        <span class="snum" id="sh-${m.id}">${m.scoreHome}</span>
+        <span class="ssep">:</span>
+        <span class="snum" id="sa-${m.id}">${m.scoreAway}</span>
+      </div>
+      <div class="sc-btns">
+        <button class="sb plus" onclick="changeScore(${m.id},'a',1)" ${dis}>+</button>
+        <button class="sb minus" onclick="changeScore(${m.id},'a',-1)" ${dis}>−</button>
+      </div>
+    </div>
+    <div class="tb r"><div class="tn">${m.away}</div></div>
+  </div>
+  <div class="cf">
+    <div class="meta">
+      <span>⏱ ${m.format}</span>
+      ${m.handicap ? `<span>⚖️ ${m.handicap}</span>` : ''}
+      <span>🏟 ${m.vestiaire}</span>
+      <span>👤 ${m.arbitres}</span>
+    </div>
+    <div class="abtns">
+      <span class="timer ${live?'live':''}" id="t-${m.id}">${fmt(m.elapsed)}</span>
+      ${isAdmin ? `
+        ${!live&&!done ? `<button class="abtn start" onclick="startMatch(${m.id})">▶ Démarrer</button>` : ''}
+        ${live         ? `<button class="abtn end"   onclick="endMatch(${m.id})">■ Terminer</button>`  : ''}
+        ${live||done   ? `<button class="abtn rst"   onclick="resetMatch(${m.id})">↺</button>`         : ''}
+      ` : ''}
+    </div>
+  </div>
+  ${!isAdmin ? `<div class="ro">👁 Lecture seule — scores en direct</div>` : ''}
+</div>`;
     });
   });
 
-  container.innerHTML = html || '<div class="empty">Aucun match pour ce jour.</div>';
-  matches.filter(m => m.timerRunning).forEach(m => startTimer(m.id));
+  app.innerHTML = html || '<div style="text-align:center;padding:60px;color:var(--muted)">Aucun match</div>';
+  restartClocks();
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-function init() {
-  fetchData();
-  // Poll every 10 seconds for non-admin viewers
-  pollInterval = setInterval(() => { if (!isSaving) fetchData(); }, 10000);
-}
+// ═══════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════
+fetchData();
 
-// Boot
-if (loadConfig()) {
-  document.getElementById('setup-screen').style.display = 'none';
-  init();
-}
+// Poll every 15s — but only when admin is NOT logged in
+setInterval(() => {
+  if (!isAdmin) fetchData();
+}, 15000);
 </script>
 </body>
 </html>
