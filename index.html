@@ -140,17 +140,17 @@ const MASTER_KEY = '$2a$10$xJaHeEJVUxMdv9RphJx9cODE66F2oymH0dH6lEiHKVwY08KXSFdb.
 const ADMIN_PASS = 'coupeaube2526';
 
 const DEFAULT = [
-  {id:1,day:'sat',cat:'Moins 11 Filles',time:'10h30',fmt:'3x12 — pause 5min',vest:'1-2 Hand',home:'RSJH',away:'ASMT',arb:'R. Diop & P.A. Yao',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:2,day:'sat',cat:'Moins 13 Filles',time:'12h00',fmt:'3x15 — pause 5min',vest:'3-4 Hand',home:'RSJH',away:'ASMT',arb:'M. Bourgeois & M. Lambelin',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:3,day:'sat',cat:'Moins 11 Garçons',time:'14h00',fmt:'3x12 — pause 5min',vest:'1-2 Foot',home:'RSJH',away:'HBCSC',arb:'L.P. Visse',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:4,day:'sat',cat:'Moins 15 Garçons',time:'16h00',fmt:'3x18 — pause 5min',vest:'3-4 Foot',home:'HBCSC',away:'RSJH',arb:'B. Laurent & Sautereau',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:5,day:'sat',cat:'Moins 18 Garçons',time:'18h00',fmt:'2x30 — pause 10min',vest:'1-2 Hand',home:'RHB',away:'Entente USSM/Savino',arb:'O. Blondet & E. Florian',hcap:'2x5 buts retard RHB',s:'pending',sh:0,sa:0,el:0},
-  {id:6,day:'sat',cat:'Moins 18 Filles',time:'20h00',fmt:'2x30 — pause 10min',vest:'3-4 Hand',home:'Entente ASMT/ARCIS',away:'Entente RSJH SAVINO',arb:'A. Haby & G. Buda',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:7,day:'sun',cat:'Moins 15 Filles',time:'10h00',fmt:'3x18 — pause 5min',vest:'1-2 Hand',home:'Entente ASMT/ARCIS',away:'HBCSC',arb:'M. El Battani & H. Pointer',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:8,day:'sun',cat:'Moins 13 Garçons',time:'12h00',fmt:'3x15 — pause 5min',vest:'1-2 Foot',home:'RSJH',away:'ETAC',arb:'B. Bertolo & Y. Colombet',hcap:'3x3 buts retard RSJH',s:'pending',sh:0,sa:0,el:0},
-  {id:9,day:'sun',cat:'Plus 16 Filles',time:'14h00',fmt:'2x30 — pause 10min',vest:'1-2 Hand',home:'Bar Sur Seine',away:'HBCSC',arb:'B. Laurent & Sautereau',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:10,day:'sun',cat:'🏆 Supercoupe +16 Garçons',time:'16h00',fmt:'2x30 — pause 10min',vest:'3-4 Hand',home:'Bar Sur Seine',away:'ETAC',arb:'T. Bradja & C. Duquesnoy',hcap:'',s:'pending',sh:0,sa:0,el:0},
-  {id:11,day:'sun',cat:'Plus 16 Masculin',time:'18h00',fmt:'2x30 — pause 10min',vest:'1-2 Hand',home:'Nogent',away:'Bar Sur Aube',arb:'L. Doré & A. Sanguinède',hcap:'',s:'pending',sh:0,sa:0,el:0}
+  {id:1,day:'sat',category:'Moins 11 Filles',time:'10h30',format:'3x12 — pause 5min',vestiaire:'1-2 Hand',home:'RSJH',away:'ASMT',arbitres:'R. Diop & P.A. Yao',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:2,day:'sat',category:'Moins 13 Filles',time:'12h00',format:'3x15 — pause 5min',vestiaire:'3-4 Hand',home:'RSJH',away:'ASMT',arbitres:'M. Bourgeois & M. Lambelin',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:3,day:'sat',category:'Moins 11 Garçons',time:'14h00',format:'3x12 — pause 5min',vestiaire:'1-2 Foot',home:'RSJH',away:'HBCSC',arbitres:'L.P. Visse',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:4,day:'sat',category:'Moins 15 Garçons',time:'16h00',format:'3x18 — pause 5min',vestiaire:'3-4 Foot',home:'HBCSC',away:'RSJH',arbitres:'B. Laurent & Sautereau',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:5,day:'sat',category:'Moins 18 Garçons',time:'18h00',format:'2x30 — pause 10min',vestiaire:'1-2 Hand',home:'RHB',away:'Entente USSM/Savino',arbitres:'O. Blondet & E. Florian',handicap:'2x5 buts retard RHB',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:6,day:'sat',category:'Moins 18 Filles',time:'20h00',format:'2x30 — pause 10min',vestiaire:'3-4 Hand',home:'Entente ASMT/ARCIS',away:'Entente RSJH SAVINO',arbitres:'A. Haby & G. Buda',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:7,day:'sun',category:'Moins 15 Filles',time:'10h00',format:'3x18 — pause 5min',vestiaire:'1-2 Hand',home:'Entente ASMT/ARCIS',away:'HBCSC',arbitres:'M. El Battani & H. Pointer',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:8,day:'sun',category:'Moins 13 Garçons',time:'12h00',format:'3x15 — pause 5min',vestiaire:'1-2 Foot',home:'RSJH',away:'ETAC',arbitres:'B. Bertolo & Y. Colombet',handicap:'3x3 buts retard RSJH',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:9,day:'sun',category:'Plus 16 Filles',time:'14h00',format:'2x30 — pause 10min',vestiaire:'1-2 Hand',home:'Bar Sur Seine',away:'HBCSC',arbitres:'B. Laurent & Sautereau',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:10,day:'sun',category:'🏆 Supercoupe +16 Garçons',time:'16h00',format:'2x30 — pause 10min',vestiaire:'3-4 Hand',home:'Bar Sur Seine',away:'ETAC',arbitres:'T. Bradja & C. Duquesnoy',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0},
+  {id:11,day:'sun',category:'Plus 16 Masculin',time:'18h00',format:'2x30 — pause 10min',vestiaire:'1-2 Hand',home:'Nogent',away:'Bar Sur Aube',arbitres:'L. Doré & A. Sanguinède',handicap:'',status:'pending',scoreHome:0,scoreAway:0,elapsed:0}
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -214,13 +214,13 @@ function mergeRemote(remote) {
   remote.forEach(rm => {
     const lm = matches.find(x => x.id === rm.id);
     if (!lm) return;
-    lm.s  = rm.s;
-    lm.sh = rm.sh;
-    lm.sa = rm.sa;
-    lm.el = rm.el;
+    lm.status = rm.status;
+    lm.scoreHome = rm.scoreHome;
+    lm.scoreAway = rm.scoreAway;
+    lm.elapsed = rm.elapsed;
     // Sync clock state
-    if (rm.s === 'live' && !clocks[rm.id]) startClock(rm.id);
-    if (rm.s !== 'live' && clocks[rm.id]) stopClock(rm.id);
+    if (rm.status === 'live' && !clocks[rm.id]) startClock(rm.id);
+    if (rm.status !== 'live' && clocks[rm.id]) stopClock(rm.id);
   });
 }
 
@@ -260,12 +260,12 @@ function startClock(id) {
   if (clocks[id]) return;
   clocks[id] = setInterval(() => {
     const m = matches.find(x => x.id === id);
-    if (!m || m.s !== 'live') { stopClock(id); return; }
-    m.el++;
+    if (!m || m.status !== 'live') { stopClock(id); return; }
+    m.elapsed++;
     const el = document.getElementById('t-' + id);
-    if (el) el.textContent = fmt(m.el);
+    if (el) el.textContent = fmt(m.elapsed);
     // Save elapsed every 60s to avoid flooding API
-    if (m.el % 60 === 0) saveData();
+    if (m.elapsed % 60 === 0) saveData();
   }, 1000);
 }
 function stopClock(id) {
@@ -273,7 +273,7 @@ function stopClock(id) {
   delete clocks[id];
 }
 function restartClocks() {
-  matches.filter(m => m.s === 'live').forEach(m => startClock(m.id));
+  matches.filter(m => m.status === 'live').forEach(m => startClock(m.id));
 }
 
 // ═══════════════════════════════════════════════════════
@@ -290,7 +290,7 @@ function act(fn) {
 function startMatch(id) {
   act(() => {
     const m = matches.find(x=>x.id===id);
-    m.s = 'live';
+    m.status = 'live';
     startClock(id);
     showToast(`▶ ${m.home} vs ${m.away} — Lancé !`);
   });
@@ -298,28 +298,28 @@ function startMatch(id) {
 function endMatch(id) {
   act(() => {
     const m = matches.find(x=>x.id===id);
-    m.s = 'done';
+    m.status = 'done';
     stopClock(id);
-    showToast(`✅ ${m.home} ${m.sh}:${m.sa} ${m.away}`);
+    showToast(`✅ ${m.home} ${m.scoreHome}:${m.scoreAway} ${m.away}`);
   });
 }
 function resetMatch(id) {
   act(() => {
     const m = matches.find(x=>x.id===id);
-    m.s = 'pending'; m.sh = 0; m.sa = 0; m.el = 0;
+    m.status = 'pending'; m.scoreHome = 0; m.scoreAway = 0; m.elapsed = 0;
     stopClock(id);
   });
 }
 function changeScore(id, side, d) {
   act(() => {
     const m = matches.find(x=>x.id===id);
-    if (side==='h') m.sh = Math.max(0, m.sh + d);
-    else            m.sa = Math.max(0, m.sa + d);
+    if (side==='h') m.scoreHome = Math.max(0, m.scoreHome + d);
+    else            m.scoreAway = Math.max(0, m.scoreAway + d);
     // Update DOM immediately for snappy feel
     const eh = document.getElementById('sh-'+id);
     const ea = document.getElementById('sa-'+id);
-    if (eh) eh.textContent = m.sh;
-    if (ea) ea.textContent = m.sa;
+    if (eh) eh.textContent = m.scoreHome;
+    if (ea) ea.textContent = m.scoreAway;
   });
 }
 
@@ -385,14 +385,14 @@ function render() {
   days.forEach(day => {
     if (filter === 'all') html += `<div class="day-label ${day}">${lbls[day]}</div>`;
     matches.filter(m => m.day === day).forEach(m => {
-      const live = m.s === 'live', done = m.s === 'done';
+      const live = m.status === 'live', done = m.status === 'done';
       const sl   = live ? 'En cours' : done ? 'Terminé' : m.time;
       const dis  = isAdmin ? '' : 'disabled';
       html += `
-<div class="mc ${m.s}">
+<div class="mc ${m.status}">
   <div class="ch">
-    <span class="cat">${m.cat}</span>
-    <span class="sbadge ${m.s}">${sl}</span>
+    <span class="cat">${m.category}</span>
+    <span class="sbadge ${m.status}">${sl}</span>
   </div>
   <div class="sr">
     <div class="tb"><div class="tn">${m.home}</div></div>
@@ -402,9 +402,9 @@ function render() {
         <button class="sb minus" onclick="changeScore(${m.id},'h',-1)" ${dis}>−</button>
       </div>
       <div class="sblock">
-        <span class="snum" id="sh-${m.id}">${m.sh}</span>
+        <span class="snum" id="sh-${m.id}">${m.scoreHome}</span>
         <span class="ssep">:</span>
-        <span class="snum" id="sa-${m.id}">${m.sa}</span>
+        <span class="snum" id="sa-${m.id}">${m.scoreAway}</span>
       </div>
       <div class="sc-btns">
         <button class="sb plus" onclick="changeScore(${m.id},'a',1)" ${dis}>+</button>
@@ -415,13 +415,13 @@ function render() {
   </div>
   <div class="cf">
     <div class="meta">
-      <span>⏱ ${m.fmt}</span>
-      ${m.hcap ? `<span>⚖️ ${m.hcap}</span>` : ''}
-      <span>🏟 ${m.vest}</span>
-      <span>👤 ${m.arb}</span>
+      <span>⏱ ${m.format}</span>
+      ${m.handicap ? `<span>⚖️ ${m.handicap}</span>` : ''}
+      <span>🏟 ${m.vestiaire}</span>
+      <span>👤 ${m.arbitres}</span>
     </div>
     <div class="abtns">
-      <span class="timer ${live?'live':''}" id="t-${m.id}">${fmt(m.el)}</span>
+      <span class="timer ${live?'live':''}" id="t-${m.id}">${fmt(m.elapsed)}</span>
       ${isAdmin ? `
         ${!live&&!done ? `<button class="abtn start" onclick="startMatch(${m.id})">▶ Démarrer</button>` : ''}
         ${live         ? `<button class="abtn end"   onclick="endMatch(${m.id})">■ Terminer</button>`  : ''}
